@@ -1,5 +1,5 @@
 {
-  "name": "element-plus-vite-starter",
+  "name": "app-duck",
   "private": true,
   "version": "0.1.0",
   "scripts": {
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "element-plus": "^2.3.12",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@iconify-json/ep": "^1.1.12",

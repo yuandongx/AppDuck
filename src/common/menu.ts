@@ -1,0 +1,5 @@
+
+interface MenuItem {
+    Url string
+    
+}
