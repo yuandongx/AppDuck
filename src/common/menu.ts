@@ -1,5 +1,1 @@
 
-interface MenuItem {
-    Url string
-    
-}
