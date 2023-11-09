@@ -6,7 +6,6 @@ import router from '~/route';
       <div class="flex main-container">
         <router-view name="LeftSide" />
         <div w="full" py="4">
-          <Logos my="4" />
           <router-view />
         </div>
       </div>
