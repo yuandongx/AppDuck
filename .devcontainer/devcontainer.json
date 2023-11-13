@@ -1,0 +1,4 @@
+{
+    "image": "nodejs:latest",
+    "forwardPorts": [5173]
+}
