@@ -8,7 +8,8 @@
   >
     <el-sub-menu index="1">
       <template #title>
-        <el-icon><location /></el-icon>
+        <!-- <el-icon><location /></el-icon> -->
+        <TaskList></TaskList>
         <span>Navigator One222</span>
       </template>
       <el-menu-item-group>

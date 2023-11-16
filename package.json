@@ -1,9 +1,5 @@
 {
   "name": "@yuandongx/app-duck",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yuandongx/AppDuck.git"
-  },
   "private": true,
   "version": "0.1.0",
   "scripts": {

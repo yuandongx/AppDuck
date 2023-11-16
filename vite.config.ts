@@ -21,10 +21,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/apiv1': {
-      target: 'http://127.0.0.1:8080/api',
-      changeOrigin: true,
-      rewrite: (path) => path.replace(/^\/apiV1/, '/v1'),
-    },},
+        target: 'http://127.0.0.1:8080/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/apiV1/, '/v1'),
+      },
+    },
   },
   resolve: {
     alias: {
