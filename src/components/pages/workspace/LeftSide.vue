@@ -7,29 +7,30 @@
     @close="handleClose"
   >
     <el-sub-menu index="1">
-      <template #title>
-        <!-- <el-icon><location /></el-icon> -->
-        <TaskList></TaskList>
+      <template #title="工作任务">
+        <el-icon><icon-list /></el-icon>
         <span>Navigator One222</span>
       </template>
       <el-menu-item-group>
-        <template #title><span>Group One</span></template>
-        <el-menu-item index="1-1">item one222222222</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
+        <template #title><span>日常工作</span></template>
+        <el-menu-item index="1-1">日报</el-menu-item>
+        <el-menu-item index="1-2">周报</el-menu-item>
       </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
+      <el-menu-item-group title="计划">
+        <el-menu-item index="1-3">下周计划</el-menu-item>
+        <el-menu-item index="1-4">月度计划</el-menu-item>
       </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title><span>item four</span></template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
-      </el-sub-menu>
     </el-sub-menu>
-    <el-menu-item index="2">
-      <el-icon><icon-menu /></el-icon>
-      <template #title>Navigator Two</template>
-    </el-menu-item>
-    <el-menu-item index="3" disabled>
+    <el-sub-menu index="2">
+      <template #title="工作任务">
+        <el-icon><icon-menu /></el-icon>
+        <span>Navigator One222</span>
+      </template>
+      <el-menu-item index="2-1">
+        <template #title>财务笔记</template>
+      </el-menu-item>
+    </el-sub-menu>
+    <el-menu-item index="3">
       <el-icon><document /></el-icon>
       <template #title>Navigator Three</template>
     </el-menu-item>
