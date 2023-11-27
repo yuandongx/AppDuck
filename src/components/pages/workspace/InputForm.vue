@@ -5,10 +5,10 @@
     @closed="$emit('change:visible')"
     title="录入/编辑账单"
   >
-    <el-form v-model="formData">
+    <el-form v-model="formData" label-position="right" label-width="80px">
       <!-- 业务部门 -->
       <el-row>
-        <el-col>
+        <el-col :span="12">
           <el-form-item label="业务部门">
             <el-select
               multiple
@@ -16,7 +16,7 @@
               allow-create
               default-first-option
               :reserve-keyword="false"
-              placeholder="Choose tags for your article"
+              placeholder="请选择部门"
               v-model="formData.BusinessDepartment"
             >
               <el-option
@@ -28,13 +28,24 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :span="12">
+          <el-form-item label="企业名称">
+            <el-input
+              v-model="formData.CompanyName"
+              palceholder="请填写企业名称"
+            ></el-input>
+          </el-form-item>
+        </el-col>
       </el-row>
 
       <el-row>
         <el-col :span="12">
           <!-- 发票种类 -->
           <el-form-item label="发票种类">
-            <el-select v-model="formData.InvoiceType"></el-select>
+            <el-select
+              v-model="formData.InvoiceType"
+              placeholder="选择发票种类"
+            ></el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -43,16 +54,37 @@
             <el-date-picker
               v-model="formData.InvoiceDate"
               type="date"
-              placeholder="Pick a day"
+              placeholder="选择开票日期"
               size="small"
             />
           </el-form-item>
         </el-col>
       </el-row>
-      <!-- 开票金额 -->
 
-      <el-form-item></el-form-item>
-      <!-- 差额 -->
+      <el-row>
+        <el-col :span="12">
+          <!-- 开票金额 -->
+          <el-form-item label="开票金额">
+            <el-input-number
+              v-model="formData.InvoiceAmount"
+              :min="0.0"
+              controls-position="right"
+              size="small"
+            ></el-input-number>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <!-- 差额 -->
+          <el-form-item label="差额">
+            <el-input-number
+              v-model="formData.DiffBetweenAmount"
+              :min="0.0"
+              controls-position="right"
+              size="small"
+            ></el-input-number>
+          </el-form-item>
+        </el-col>
+      </el-row>
 
       <el-form-item></el-form-item>
       <!-- 手续费 -->
