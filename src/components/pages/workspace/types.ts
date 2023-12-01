@@ -13,4 +13,5 @@ export interface FinaNote {
     PaymentDateOfAmount: number; // 支付劳务费日期
     NoteDate?: string; // 记录日期
     NoteMonth?: string;//记账年月
+    Comment: string; // 备注 重要
 }
