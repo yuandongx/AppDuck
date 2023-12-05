@@ -20,8 +20,8 @@ const pathSrc = path.resolve(__dirname, 'src')
 export default defineConfig({
   server: {
     proxy: {
-      '/apiv1': {
-        target: 'http://127.0.0.1:8080/api',
+      '/apiV1': {
+        target: 'http://124.71.148.227:8080/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/apiV1/, '/v1'),
       },
