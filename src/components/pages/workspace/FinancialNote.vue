@@ -7,7 +7,7 @@
     />
   </div>
   <el-divider />
-  <el-table height="80vh">
+  <el-table height="80vh" :data="dataSource">
     <el-table-column label="业务" prop="date" align="center" />
     <el-table-column label="企业名称" prop="date" align="center" />
     <el-table-column label="发票信息" align="center">
@@ -31,12 +31,36 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
+import { FinaNote } from "./types";
+import http from "~/libs/http";
+import { reactive } from "vue";
+import { onMounted } from "vue";
+import { onUnmounted } from "vue";
 
+interface P  {
+  [key :string]: string;
+}
+let intervalId: string | number | NodeJS.Timeout | null | undefined = null;
+const params: P = reactive({});
+const dataSource = ref<Array<FinaNote>>([]);
 const showInput = ref<boolean>(false);
 const onShowInput = (flag: boolean) => {
   showInput.value = flag;
   console.log(showInput);
 };
+const fetch = () => {
+  http.get('/workspace/financial', {params})
+  .then((response)=> {
+    if (response.status = 200) {
+      console.log(response);
+      dataSource.value = response.data.data;
+    }
+  });
+}
+onMounted(() => {
+  intervalId = setInterval(fetch, 5000);
+});
+onUnmounted(() => intervalId && clearInterval(intervalId));
 </script>
 <style scoped>
 .header-tool {
