@@ -157,7 +157,8 @@
 import { reactive, ref } from "vue";
 import { FinaNote } from "./types";
 import http from "~/libs/http";
-import { ElMessage, ElMessageBox } from 'element-plus';
+
+
 interface Props {
   inputVisible: boolean;
 }
@@ -197,7 +198,7 @@ const submit = () => {
       type: 'info',
     }).then(async () => {
       const response = await http.post('/workspace/financial', formData);
-      if(response.status) {
+      if(response.status == 200) {
         console.log(response);
       }
     }).catch(()=>{
@@ -221,4 +222,5 @@ const props = defineProps<Props>();
   font-style: italic;
   color: darkcyan;
 }
+
 </style>

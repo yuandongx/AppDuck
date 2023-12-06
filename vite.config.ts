@@ -1,7 +1,7 @@
 import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
+import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
@@ -21,9 +21,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/apiV1': {
-        target: 'http://124.71.148.227:8080/api',
+        target: 'http://124.71.148.227:8000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/apiV1/, '/v1'),
+        rewrite: (path) => path.replace(/^\/apiV1/, '/apiv1'),
       },
     },
   },
@@ -41,6 +41,9 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
     Components({
       // allow auto load markdown components under `./src/components/`
       extensions: ['vue', 'md'],
