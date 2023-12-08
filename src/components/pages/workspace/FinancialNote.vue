@@ -1,10 +1,18 @@
 <template>
   <div class="header-tool">
-    <el-button link bg @click="() => onShowInput(true)">记一笔</el-button>
+    <el-row>
+      <el-col :span="2">
+        <el-button link bg @click="() => onShowInput(true)">记一笔</el-button>
+      </el-col>
+      <el-col :span="2">
+        <el-button link bg @click="() => onShowUpload(true)">导入账单</el-button>
+      </el-col>
+    </el-row>
     <input-form
       :input-visible="showInput"
       @change:visible="() => onShowInput(false)"
     />
+    <upload @change:visible="() => onShowUpload(false)" :visible-value="showUpload"/>
   </div>
   <el-divider />
   <el-table height="80vh" :data="dataSource">
@@ -44,10 +52,9 @@ let intervalId: string | number | NodeJS.Timeout | null | undefined = null;
 const params: P = reactive({});
 const dataSource = ref<Array<FinaNote>>([]);
 const showInput = ref<boolean>(false);
-const onShowInput = (flag: boolean) => {
-  showInput.value = flag;
-  console.log(showInput);
-};
+const showUpload = ref<boolean>(false);
+const onShowUpload = (flag: boolean) => showUpload.value = flag;
+const onShowInput = (flag: boolean) => showInput.value = flag;
 const fetch = () => {
   http.get('/workspace/financial', {params})
   .then((response)=> {
@@ -58,7 +65,7 @@ const fetch = () => {
   });
 }
 onMounted(() => {
-  intervalId = setInterval(fetch, 5000);
+  // intervalId = setInterval(fetch, 5000);
 });
 onUnmounted(() => intervalId && clearInterval(intervalId));
 </script>
