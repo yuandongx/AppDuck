@@ -18,15 +18,28 @@
       <el-icon class="el-icon--upload"><upload-filled /></el-icon>
       <div class="el-upload__text">拖放文件到这里 <em>或点击上传</em></div>
     </el-upload>
+    <el-divider content-position="center" v-show="showSubmit">请选择表单，然后点提交</el-divider>
     <el-checkbox-group  v-model="selects">
       <el-checkbox v-for="item in labels" :label="item" :key="item" />
     </el-checkbox-group >
+    <el-row  v-show="canSubmit" justify="end">
+      <el-col :span="4">
+        <el-button size="small">取消</el-button>
+      </el-col>
+      <el-col :span="4">
+        <el-button
+        size="small"
+        type="success"
+        @click="confirm">提交</el-button>
+      </el-col>
+    </el-row>
   </el-dialog>
 </template>
 <script setup lang="ts">
 import { UploadFilled } from "@element-plus/icons-vue";
 import {   ref } from "vue";
 import { genFileId } from "element-plus";
+import http from "~/libs/http";
 import type {
   UploadFile,
   UploadFiles,
@@ -34,6 +47,7 @@ import type {
   UploadProps,
   UploadRawFile,
 } from "element-plus";
+import { computed } from "vue";
 let fileName = '';
 const selects = ref<Array<string>>([]);
 const labels = ref<Array<string>>([]);
@@ -48,6 +62,7 @@ const handleExceed: UploadProps["onExceed"] = (files) => {
   const file = files[0] as UploadRawFile;
   file.uid = genFileId();
   upload.value!.handleStart(file);
+  upload.value!.submit();
 };
 const update = (response: any): string[] => {
   const list: string[] = [];
@@ -66,17 +81,22 @@ const handleSuccess: UploadProps["onSuccess"] = (
 ) => {
   if (uploadFile.response) labels.value =  [...update(uploadFile.response)];
 };
-const handleError: UploadProps["onError"] = (
-  response: any,
-  uploadFile: UploadFile,
-  uploadFiles: UploadFiles
-) => {};
 const handleChange: UploadProps["onChange"] = (
   uploadFile: UploadFile,
   uploadFiles: UploadFiles
 ) => {
   if (uploadFile.response) labels.value = [...update(uploadFile.response)];
 };
+const showSubmit = computed(() => labels.value.length > 0);
+const canSubmit = computed(() => selects.value.length > 0);
+const confirm = () => {
+  const split = "<>";
+  const params = {'file_name': fileName,
+                   'sheets': selects.value.join(split),
+                   split}
+  http.get('/workspace/upload', {params})
+  .then((response) => console.log(response));
+}
 </script>
 <style scoped>
 .upload-demo {

@@ -34,7 +34,9 @@ declare module 'vue' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElUpload: typeof import('element-plus/es')['ElUpload']
+    ExportVue: typeof import('./components/pages/workspace/ExportVue.vue')['default']
     FinancialNote: typeof import('./components/pages/workspace/FinancialNote.vue')['default']
+    ImportVue: typeof import('./components/pages/workspace/ImportVue.vue')['default']
     ImputForm: typeof import('./components/pages/workspace/ImputForm.vue')['default']
     Index: typeof import('./components/Index.vue')['default']
     InputForm: typeof import('./components/pages/workspace/InputForm.vue')['default']
@@ -43,6 +45,5 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TaskList: typeof import('./components/svgs/TaskList.vue')['default']
-    Upload: typeof import('./components/pages/workspace/Upload.vue')['default']
   }
 }
