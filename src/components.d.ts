@@ -46,4 +46,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TaskList: typeof import('./components/svgs/TaskList.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }

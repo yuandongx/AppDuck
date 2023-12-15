@@ -34,6 +34,7 @@
       </el-col>
     </el-row>
   </el-dialog>
+  
 </template>
 <script setup lang="ts">
 import { UploadFilled } from "@element-plus/icons-vue";
@@ -48,6 +49,7 @@ import type {
   UploadRawFile,
 } from "element-plus";
 import { computed } from "vue";
+import { tr } from "element-plus/es/locale";
 let fileName = '';
 const selects = ref<Array<string>>([]);
 const labels = ref<Array<string>>([]);
@@ -56,7 +58,7 @@ defineProps({
   visibleValue: Boolean,
 });
 const upload = ref<UploadInstance>();
-
+const loading = ref(false);
 const handleExceed: UploadProps["onExceed"] = (files) => {
   upload.value!.clearFiles();
   const file = files[0] as UploadRawFile;
@@ -94,8 +96,12 @@ const confirm = () => {
   const params = {'file_name': fileName,
                    'sheets': selects.value.join(split),
                    split}
+  loading.value = true;
   http.get('/workspace/upload', {params})
-  .then((response) => console.log(response));
+  .then((response) => console.log(response))
+  .finally(()=>{
+    loading.value = false;
+  });
 }
 </script>
 <style scoped>
