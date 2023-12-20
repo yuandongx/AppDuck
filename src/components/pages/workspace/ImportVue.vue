@@ -30,6 +30,8 @@
         <el-button
         size="small"
         type="success"
+        element-loading-text="Loading..."
+        v-loading.fullscreen.lock="loading"
         @click="confirm">提交</el-button>
       </el-col>
     </el-row>
@@ -49,11 +51,10 @@ import type {
   UploadRawFile,
 } from "element-plus";
 import { computed } from "vue";
-import { tr } from "element-plus/es/locale";
 let fileName = '';
 const selects = ref<Array<string>>([]);
 const labels = ref<Array<string>>([]);
-defineEmits(["change:visible"]);
+const emit = defineEmits(["change:visible"]);
 defineProps({
   visibleValue: Boolean,
 });
@@ -98,7 +99,9 @@ const confirm = () => {
                    split}
   loading.value = true;
   http.get('/workspace/upload', {params})
-  .then((response) => console.log(response))
+  .then((response) => {
+    emit('change:visible')
+  })
   .finally(()=>{
     loading.value = false;
   });
