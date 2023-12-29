@@ -229,6 +229,7 @@
 import { reactive, ref } from "vue";
 import { FinaNote } from "./types";
 import http from "~/libs/http";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 interface Props {
   inputVisible: boolean;
@@ -241,7 +242,7 @@ const showInput = defineEmits(["change:visible"]);
 const businessOptions = ref<Array<Option>>([
   { value: "1", label: "外包派遣事业部" },
 ]);
-const hasPayBack = ref<Boolean>(false);
+const hasPayBack = ref(false);
 const Options = ref<Array<Option>>([{ value: "1", label: "外包派遣事业部" }]);
 
 const formData = reactive<FinaNote>({
