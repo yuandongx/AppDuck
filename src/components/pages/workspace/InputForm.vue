@@ -233,11 +233,13 @@ import { ElMessage, ElMessageBox } from "element-plus";
 
 interface Props {
   inputVisible: boolean;
+  updateData?: FinaNote;
 }
 interface Option {
   value: string;
   label: string;
 }
+
 const showInput = defineEmits(["change:visible"]);
 const businessOptions = ref<Array<Option>>([
   { value: "1", label: "外包派遣事业部" },
@@ -260,6 +262,13 @@ const formData = reactive<FinaNote>({
   PaymentDateOfAmount: 0,
   Comment: "",
 });
+const update = (data?: FinaNote) => {
+  if(data != undefined) {
+    for (let key in data) {
+      formData[key] = data[key];
+    }
+  }
+}
 const submit = () => {
   ElMessageBox.confirm("确定要提交记录？", "提示", {
     confirmButtonText: "确定",

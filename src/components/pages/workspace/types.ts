@@ -1,4 +1,5 @@
 export interface FinaNote {
+    [Index: string]: number|string|undefined;
     Id: number; //序号
     BusinessDepartment: string; //部门
     CompanyName: string; // 企业名称

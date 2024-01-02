@@ -16,6 +16,7 @@
     <input-form
       :input-visible="showInput"
       @change:visible="() => onShowInput(false)"
+      :update-data="updateData"
     />
     <import-vue
       @change:visible="() => onShowUpload(false)"
@@ -64,7 +65,7 @@
           content="编辑本行数据？"
           placement="left-end"
         >
-          <el-icon><EditPen /></el-icon>
+          <el-icon ><EditPen /></el-icon>
         </el-tooltip>
         <el-divider direction="vertical" />
         <el-popconfirm
@@ -103,7 +104,7 @@ import { DeleteFilled, EditPen } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 
 let intervalId: string | number | NodeJS.Timeout | null | undefined = null;
-
+const updateData = ref<FinaNote>();
 const dataSource = ref<Array<FinaNote>>([]);
 const showInput = ref<boolean>(false);
 const showUpload = ref<boolean>(false);
