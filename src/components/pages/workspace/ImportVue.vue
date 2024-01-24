@@ -1,47 +1,50 @@
 <template>
   <el-dialog
-    :model-value="visibleValue"
-    @close="$emit('change:visible')"
-    title="上传表单"
+      :model-value="visibleValue"
+      @close="$emit('change:visible')"
+      title="上传表单"
   >
     <el-upload
-      ref="upload"
-      class="upload-demo"
-      action="/apiV1/workspace/upload"
-      :limit="1"
-      :on-exceed="handleExceed"
-      :on-success="handleSuccess"
-      :on-change="handleChange"
-      drag
-      :multiple="false"
+        ref="upload"
+        class="upload-demo"
+        action="/apiV1/workspace/upload"
+        :limit="1"
+        :on-exceed="handleExceed"
+        :on-success="handleSuccess"
+        :on-change="handleChange"
+        drag
+        :multiple="false"
     >
-      <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+      <el-icon class="el-icon--upload">
+        <upload-filled/>
+      </el-icon>
       <div class="el-upload__text">拖放文件到这里 <em>或点击上传</em></div>
     </el-upload>
     <el-divider content-position="center" v-show="showSubmit">请选择表单，然后点提交</el-divider>
-    <el-checkbox-group  v-model="selects">
-      <el-checkbox v-for="item in labels" :label="item" :key="item" />
-    </el-checkbox-group >
-    <el-row  v-show="canSubmit" justify="end">
+    <el-checkbox-group v-model="selects">
+      <el-checkbox v-for="item in labels" :label="item" :key="item"/>
+    </el-checkbox-group>
+    <el-row v-show="canSubmit" justify="end">
       <el-col :span="4">
         <el-button size="small">取消</el-button>
       </el-col>
       <el-col :span="4">
         <el-button
-        size="small"
-        type="success"
-        element-loading-text="Loading..."
-        v-loading.fullscreen.lock="loading"
-        @click="confirm">提交</el-button>
+            size="small"
+            type="success"
+            element-loading-text="Loading..."
+            v-loading.fullscreen.lock="loading"
+            @click="confirm">提交
+        </el-button>
       </el-col>
     </el-row>
   </el-dialog>
-  
+
 </template>
 <script setup lang="ts">
-import { UploadFilled } from "@element-plus/icons-vue";
-import {   ref } from "vue";
-import { genFileId } from "element-plus";
+import {UploadFilled} from "@element-plus/icons-vue";
+import {ref} from "vue";
+import {genFileId} from "element-plus";
 import http from "~/libs/http";
 import type {
   UploadFile,
@@ -50,7 +53,8 @@ import type {
   UploadProps,
   UploadRawFile,
 } from "element-plus";
-import { computed } from "vue";
+import {computed} from "vue";
+
 let fileName = '';
 const selects = ref<Array<string>>([]);
 const labels = ref<Array<string>>([]);
@@ -71,22 +75,22 @@ const update = (response: any): string[] => {
   const list: string[] = [];
   for (let file in response) {
     fileName = file;
-    for(let sheet in response[file] ){
+    for (let sheet in response[file]) {
       list.push(response[file][sheet]);
     }
   }
   return list
 }
 const handleSuccess: UploadProps["onSuccess"] = (
-  response: any,
-  uploadFile: UploadFile,
-  uploadFiles: UploadFiles
+    response: any,
+    uploadFile: UploadFile,
+    uploadFiles: UploadFiles
 ) => {
-  if (uploadFile.response) labels.value =  [...update(uploadFile.response)];
+  if (uploadFile.response) labels.value = [...update(uploadFile.response)];
 };
 const handleChange: UploadProps["onChange"] = (
-  uploadFile: UploadFile,
-  uploadFiles: UploadFiles
+    uploadFile: UploadFile,
+    uploadFiles: UploadFiles
 ) => {
   if (uploadFile.response) labels.value = [...update(uploadFile.response)];
 };
@@ -94,17 +98,19 @@ const showSubmit = computed(() => labels.value.length > 0);
 const canSubmit = computed(() => selects.value.length > 0);
 const confirm = () => {
   const split = "<>";
-  const params = {'file_name': fileName,
-                   'sheets': selects.value.join(split),
-                   split}
+  const params = {
+    'file_name': fileName,
+    'sheets': selects.value.join(split),
+    split
+  }
   loading.value = true;
   http.get('/workspace/upload', {params})
-  .then((response) => {
-    emit('change:visible')
-  })
-  .finally(()=>{
-    loading.value = false;
-  });
+      .then((response) => {
+        emit('change:visible')
+      })
+      .finally(() => {
+        loading.value = false;
+      });
 }
 </script>
 <style scoped>
@@ -116,6 +122,7 @@ const confirm = () => {
   overflow: hidden;
   transition: var(--el-transition-duration-fast);
 }
+
 .el-icon--upload {
   font-size: 60px;
   color: rgb(62, 98, 160);

@@ -6,7 +6,8 @@
       </el-col>
       <el-col :span="2">
         <el-button link bg @click="() => onShowUpload(true)"
-          >导入账单</el-button
+        >导入账单
+        </el-button
         >
       </el-col>
       <el-col :span="2">
@@ -14,94 +15,98 @@
       </el-col>
     </el-row>
     <input-form
-      :input-visible="showInput"
-      @change:visible="() => onShowInput(false)"
-      :update-data="updateData"
+        :input-visible="showInput"
+        @change:visible="() => onShowInput(false)"
+        :update-data="updateData"
     />
     <import-vue
-      @change:visible="() => onShowUpload(false)"
-      :visible-value="showUpload"
+        @change:visible="() => onShowUpload(false)"
+        :visible-value="showUpload"
     />
   </div>
-  <el-divider />
+  <el-divider/>
   <el-table
-    height="80vh"
-    :data="dataSource"
-    :row-class-name="tableRowClassName"
-    v-loading="loading"
+      height="80vh"
+      :data="dataSource"
+      :row-class-name="tableRowClassName"
+      v-loading="loading"
   >
-    <el-table-column label="业务" prop="BusinessDepartment" align="middle" />
-    <el-table-column label="企业名称" prop="CompanyName" align="middle" />
-    <el-table-column label="发票信息" align="middle">
-      <el-table-column label="种类" prop="InvoiceType" align="middle" />
-      <el-table-column label="日期" prop="InvoiceDate" align="middle" />
-      <el-table-column label="金额" prop="daInvoiceAmount" align="middle" />
-      <el-table-column label="差额" prop="DiffBetweenAmount" align="middle" />
-      <el-table-column label="手续费" prop="ServiceChange" align="middle" />
+    <el-table-column label="业务" prop="BusinessDepartment" align="center"/>
+    <el-table-column label="企业名称" prop="CompanyName" align="center"/>
+    <el-table-column label="发票信息" align="center">
+      <el-table-column label="种类" prop="InvoiceType" align="center"/>
+      <el-table-column label="日期" prop="InvoiceDate" align="center"/>
+      <el-table-column label="金额" prop="daInvoiceAmount" align="center"/>
+      <el-table-column label="差额" prop="DiffBetweenAmount" align="center"/>
+      <el-table-column label="手续费" prop="ServiceChange" align="center"/>
     </el-table-column>
-    <el-table-column label="对方付款" align="middle">
-      <el-table-column label="付款日期" prop="PaymentDate" align="middle" />
-      <el-table-column label="金额" prop="PaymentAmount" align="middle" />
+    <el-table-column label="对方付款" align="center">
+      <el-table-column label="付款日期" prop="PaymentDate" align="center"/>
+      <el-table-column label="金额" prop="PaymentAmount" align="center"/>
     </el-table-column>
-    <el-table-column label="劳务费" align="middle">
+    <el-table-column label="劳务费" align="center">
       <el-table-column
-        label="支付日期"
-        prop="PaymentDateOfLabor"
-        align="middle"
+          label="支付日期"
+          prop="PaymentDateOfLabor"
+          align="center"
       />
       <el-table-column
-        label="支付金额"
-        prop="PaymentDateOfAmount"
-        align="middle"
+          label="支付金额"
+          prop="PaymentDateOfAmount"
+          align="center"
       />
     </el-table-column>
-    <el-table-column label="备注" prop="Comment" align="middle" />
+    <el-table-column label="备注" prop="Comment" align="center"/>
 
     <el-table-column label="操作">
       <template #default="scope">
         <el-tooltip
-          class="box-item"
-          effect="dark"
-          content="编辑本行数据？"
-          placement="left-end"
+            class="box-item"
+            effect="dark"
+            content="编辑本行数据？"
+            placement="left-end"
         >
-          <el-icon ><EditPen /></el-icon>
+          <el-icon>
+            <EditPen/>
+          </el-icon>
         </el-tooltip>
-        <el-divider direction="vertical" />
+        <el-divider direction="vertical"/>
         <el-popconfirm
-          title="确定是否要删除本行数据？"
-          confirm-button-text="是"
-          cancel-button-text="否"
-          @confirm="() => deleteOne(scope.row._id)"
-          @cancel="donotDelete"
+            title="确定是否要删除本行数据？"
+            confirm-button-text="是"
+            cancel-button-text="否"
+            @confirm="() => deleteOne(scope.row._id)"
+            @cancel="donotDelete"
         >
           <template #reference>
-            <el-icon><DeleteFilled /></el-icon>
+            <el-icon>
+              <DeleteFilled/>
+            </el-icon>
           </template>
         </el-popconfirm>
       </template>
     </el-table-column>
   </el-table>
   <el-pagination
-    v-model:current-page="currentPage"
-    v-model:page-size="pageSize"
-    :page-sizes="[10, 20, 30, 50]"
-    :small="true"
-    :background="false"
-    layout="total, sizes, prev, pager, next, jumper"
-    :total="total"
-    @size-change="handleSizeChange"
-    @current-change="handleCurrentChange"
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :page-sizes="[10, 20, 30, 50]"
+      :small="true"
+      :background="false"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
   />
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
-import { FinaNote } from "./types";
+import {ref} from "vue";
+import {FinaNote} from "./types";
 import http from "~/libs/http";
-import { onMounted } from "vue";
-import { onUnmounted } from "vue";
-import { DeleteFilled, EditPen } from "@element-plus/icons-vue";
-import { ElMessage } from "element-plus";
+import {onMounted} from "vue";
+import {onUnmounted} from "vue";
+import {DeleteFilled, EditPen} from "@element-plus/icons-vue";
+import {ElMessage} from "element-plus";
 
 let intervalId: string | number | NodeJS.Timeout | null | undefined = null;
 const updateData = ref<FinaNote>();
@@ -118,41 +123,41 @@ const deleteOne = (_id: string) => {
   loading.value = true;
   console.log(_id);
   http
-    .delete(`/workspace/financial/${_id}`)
-    .then((response) => {
-      fetch();
-      const msg =
-        response.data.code == 0
-          ? "刪除操作成功!"
-          : "刪除操作失败，请联系管理员。";
-      const type = response.data.code == 0 ? "success" : "error";
-      ElMessage({
-        message: msg,
-        type: type,
-      });
-    })
-    .finally(() => (loading.value = false));
+      .delete(`/workspace/financial/${_id}`)
+      .then((response) => {
+        fetch();
+        const msg =
+            response.data.code == 0
+                ? "刪除操作成功!"
+                : "刪除操作失败，请联系管理员。";
+        const type = response.data.code == 0 ? "success" : "error";
+        ElMessage({
+          message: msg,
+          type: type,
+        });
+      })
+      .finally(() => (loading.value = false));
 };
 const donotDelete = () => {
   console.log("delete notthing");
 };
 const fetch = () => {
-  const params = { pageSize: pageSize.value, currentPage: currentPage.value };
+  const params = {pageSize: pageSize.value, currentPage: currentPage.value};
   http
-    .get("/workspace/financial", { params })
-    .then(({ data, status }) => {
-      if ((status = 200)) {
-        console.log(data);
-        dataSource.value = data.data;
-        total.value = data.total;
-      }
-    })
-    .finally(() => (loading.value = false));
+      .get("/workspace/financial", {params})
+      .then(({data, status}) => {
+        if ((status = 200)) {
+          console.log(data);
+          dataSource.value = data.data;
+          total.value = data.total;
+        }
+      })
+      .finally(() => (loading.value = false));
 };
 const tableRowClassName = ({
-  row,
-  rowIndex,
-}: {
+                             row,
+                             rowIndex,
+                           }: {
   row: FinaNote;
   rowIndex: number;
 }) => {
@@ -192,9 +197,11 @@ onUnmounted(() => intervalId && clearInterval(intervalId));
 .header-tool .ep-button {
   padding: 10px 10px;
 }
+
 .el-table .even-row {
   --el-table-tr-bg-color: var(--el-color-warning-light-9);
 }
+
 .el-table .odd-row {
   --el-table-tr-bg-color: var(--el-color-success-light-9);
 }
