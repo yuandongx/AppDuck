@@ -28,6 +28,9 @@
       <el-menu-item index="2-1" route="/workspace/financial-note">
         <template #title>财务笔记</template>
       </el-menu-item>
+      <el-menu-item index="2-2" route="/workspace/financial-note">
+        <template #title>业务部门</template>
+      </el-menu-item>
     </el-sub-menu>
     <el-menu-item index="3">
       <el-icon>

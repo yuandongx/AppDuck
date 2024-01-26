@@ -60,23 +60,26 @@
 
     <el-table-column label="操作">
       <template #default="scope">
-        <el-tooltip
-            class="box-item"
-            effect="dark"
-            content="编辑本行数据？"
-            placement="left-end"
+        <el-popconfirm
+            title="确定编辑本行数据？"
+            confirm-button-text="是"
+            cancel-button-text="否"
+            @confirm="() => onEditOne(scope.row)"
+            @cancel="notDelete"
         >
-          <el-icon>
-            <EditPen/>
-          </el-icon>
-        </el-tooltip>
+          <template #reference>
+            <el-icon>
+              <EditPen/>
+            </el-icon>
+          </template>
+        </el-popconfirm>
         <el-divider direction="vertical"/>
         <el-popconfirm
             title="确定是否要删除本行数据？"
             confirm-button-text="是"
             cancel-button-text="否"
             @confirm="() => deleteOne(scope.row._id)"
-            @cancel="donotDelete"
+            @cancel="notEditOne"
         >
           <template #reference>
             <el-icon>
@@ -119,6 +122,11 @@ const pageSize = ref<number>(10);
 const total = ref<number>(0);
 const onShowUpload = (flag: boolean) => (showUpload.value = flag);
 const onShowInput = (flag: boolean) => (showInput.value = flag);
+const onEditOne = (data: FinaNote) => {
+  showInput.value = true;
+  updateData.value = data;
+}
+const notEditOne = () => {}
 const deleteOne = (_id: string) => {
   loading.value = true;
   console.log(_id);
@@ -138,7 +146,7 @@ const deleteOne = (_id: string) => {
       })
       .finally(() => (loading.value = false));
 };
-const donotDelete = () => {
+const notDelete = () => {
   console.log("delete notthing");
 };
 const fetch = () => {

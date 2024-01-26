@@ -3,6 +3,7 @@
       :close-on-click-modal="false"
       :model-value="inputVisible"
       @closed="$emit('change:visible')"
+      @open="onOpen"
   >
     <template #header="{ close, titleId, titleClass }"></template>
     <el-form v-model="formData" label-position="right" label-width="80px">
@@ -17,9 +18,6 @@
             <el-select
                 class="max-width"
                 size="small"
-                multiple
-                filterable
-                allow-create
                 default-first-option
                 :reserve-keyword="false"
                 placeholder="请选择部门"
@@ -283,6 +281,7 @@ const update = (data?: FinaNote) => {
     }
   }
 }
+
 const submit = () => {
   ElMessageBox.confirm("确定要提交记录？", "提示", {
     confirmButtonText: "确定",
@@ -303,6 +302,9 @@ const submit = () => {
       });
 };
 const props = defineProps<Props>();
+const onOpen = () => {
+  update(props.updateData);
+}
 </script>
 <style scoped>
 .max-width {
